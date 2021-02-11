@@ -1,3 +1,5 @@
+#################### JUNK FROM PROJECT ######################
+############### TEST VARIABLES, FUNCTIONS, ETC. #############
 
 ## TODO: the actual y to x case, but I may have done it accidentally
 
