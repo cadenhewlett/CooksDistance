@@ -1,0 +1,92 @@
+
+## TODO: the actual y to x case, but I may have done it accidentally
+
+def cooks_distance(df, y_to_x = False, use_mse = False): ## NOTE: p = 2 for a linear model, so we're divinging by (2+1)σ^2
+
+#based on prior function design we can keep using 'x' 'y' form
+reg_values = lreg_simple(df, y_to_x, keep_names = False)
+print(reg_values)
+# y = α + βx ; expected values formula, contains 'x' from before
+predicted = reg_values['alpha'] + (reg_values['beta'] * df['x'])
+
+d_vals = [] #create empty list to throw values into
+#denominator is 1 + # of regression coefficients (2) * variance of the original regression
+var_p = (3*reg_values['variance'])
+
+mse = (1/len(df)) * sum(pow(df['y'] - predicted, 2)) #calculate mean squared error
+#print(mse)
+#repeat for the length of the dataset
+for i in range(len(df)):
+
+examined = df.loc[0] #get data at i
+
+if(not DEBUGGING): print("examining " + ''.join(str(list(examined)))) #diagnostic message
+#Define the Examined Dataset, where we drop the i-th value
+df_examined = df.drop([0], axis = 0)
+#Compute the Linear Regression without the i-th Value
+examined_reg = lreg_simple(df_examined, y_to_x, keep_names = False) #compute regression without i-th term
+#get the expected values of this new regression
+examined_predicted = examined_reg['alpha'] + (examined_reg['alpha'] * df['x'])
+#the numerator is the squared difference between the original regression and without i-th term
+errs = (predicted - examined_predicted)**2
+d_i = sum(errs / var_p)
+#returns examined to back of df, so that we may exam i + 1
+df_examined = df_examined.append(examined)
+
+d_vals.append(d_i)
+if(not DEBUGGING): print("returning " + ''.join(str(list(examined)))) #diagnostic message
+
+#d_vals = d_vals.append(errs/denominator)
+return d_vals
+cooks_distance(data)
+
+
+len(data)
+data.mean()
+examined = data.loc[0]
+examined
+output_1 = lreg_simple(df = data, info = False, keep_names = False)
+pow(output_1["variance"], 0.5)
+output_1["R-Squared"]
+output_1['alpha'] + output_1['beta'] * data['x']
+test_box = []
+data.drop([1], axis= 0)
+for i in range(len(data)):
+    pow((data['x'].std()), 2) #variance
+    sum(pow((data['x'] - data['x'].mean()), 2) / (len(data)-1)) #correctly finding variance
+#find cook's distance for a single value
+#output_1
+    #looked_at = data.loc[i]
+    df_test = data.drop([i], axis = 0)
+    test_reg = lreg_simple(df_test, keep_names = False)
+    test_reg
+    data.loc[28]
+    output_1_predicted = output_1['alpha'] + (output_1['beta'] * data['x'])
+    output_1_predicted
+
+    orig_names = list(data.columns.values)
+    orig_names[1]
+    print(list(data.columns.values))
+
+
+    test_reg_predicted = test_reg['alpha'] + (test_reg['beta'] * data['x'])
+    test_reg_predicted
+    output_1['variance']
+    (output_1_predicted - test_reg_predicted) / (3*output_1['variance'])
+    (output_1_predicted - test_reg_predicted)**2 / (3*output_1['variance'])
+    test_box.append(sum((output_1_predicted - test_reg_predicted)**2 / (3*output_1['variance'])))
+
+    df_test.append(looked_at, sort = True)
+
+    data
+    data['Salary'].mean()
+    len(data['Salary'])
+    data['Salary'].count()
+    (data['Salary'] - 10).mean()
+    (pow(data['Salary'] - 10, 2)).mean()
+    q = [1, 2, 3, 4]
+    newdata = pd.DataFrame({'names': ['a', 'b', 'c', 'd'], 'values':q})
+    newdata
+    def test():
+        print("test")
+    test()
