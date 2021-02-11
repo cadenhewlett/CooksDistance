@@ -88,7 +88,7 @@ def cooks_distance(df, y_to_x = False): ## NOTE: Currently assumes imput of an x
             #calculate the regression without the i-th point (y_hat_i)
             ex_reg_predicted = ex_reg['alpha'] + (ex_reg['beta'] * data['x'])
             #calculate the squared difference between the original regression and this new one
-            d_i = (sum((orig_predicted - ex_reg_predicted)**2 / (3*output_1['variance']))) #divided by (p + 1) * variance of first regression
+            d_i = (sum((orig_predicted - ex_reg_predicted)**2 / (3*original_reg['variance']))) #divided by (p + 1) * variance of first regression
             #append this measure to our distance container
             d_values.append(d_i)
             #if we identify an extreme value
