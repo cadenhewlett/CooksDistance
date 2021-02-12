@@ -4,8 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import figure
-from sklearn import preprocessing
-from sklearn.linear_model import LinearRegression
+#from matplotlib import collections as matcoll
 import os
 import math
 #setup
@@ -98,10 +97,28 @@ def cooks_distance(df, y_to_x = False): ## NOTE: Currently assumes imput of an x
 
     #place our outputs into a dictionary with nice keys
     outputs = {
-        "distance" : d_values, #distances
-        "extremes" : extreme_values #extremes NOTE not necessarily outliers!
+        "distance" : d_values,
+        "extremes" : extreme_values #extremes are not necessarily outliers!
     }
     return outputs
 
-cook = cooks_distance(data)
-cook
+
+"""VISUALIzATION"""
+
+cook = cooks_distance(data) #use our function to get cook's distance values
+
+fig, axs = plt.subplots() #set up axes
+xvals = np.arange(len(data)) #sequence from 0-30
+distvals = cook['distance'] #y-values
+
+#set up stemplot
+markerline, stemline, baseline = axs.stem(distvals, basefmt = " ", linefmt = 'grey', markerfmt = 'D' )
+markerline.set_markerfacecolor('none') #empty fill on the points for viewability
+plt.setp(markerline, markersize = 2) #make marker smaller\
+
+plt.title("Cook's Distance Plot with Sensitivity of " + str(round(4 / len(data), 3)))
+plt.xticks(np.arange(0, 30, step = 5)) #ticks by custom steps
+plt.ylim(bottom = -0.01, top = max(cook['distance']) + 0.05) #set y limit to be slightly below for viewing
+
+plt.show()
+## TODO: Add the value of extreme values above extreme values' location.
